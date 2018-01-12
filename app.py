@@ -28,7 +28,12 @@ def webhook():
     return r
 
 def makeWebhookResult(req):
-    
+    result = req.get("result")
+    contexts = result.get("contexts")
+    parameters = contexts[0].get("parameters")
+    components = parameters.get("components")
+    emergency = parameters.get("emergency")
+
     speech = "Hello"
 
     print("Response:")
@@ -37,15 +42,13 @@ def makeWebhookResult(req):
     return {
         "speech": speech,
         "displayText": speech,
-        #"data": {},
-        # "contextOut": [],
+        "data": [],
+        "contextOut": [],
         "source": "apiai-onlinestore-shipping"
     }
 
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
-
-    
 
     app.run(debug=True, port=port, host='0.0.0.0')
